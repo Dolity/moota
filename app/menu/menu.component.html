@@ -1,0 +1,353 @@
+<style>
+  .setSizeMenu {
+    position: absolute;
+    top: 1%;
+    left: 20%;
+    font-family: "Kanit", sans-serif;
+  }
+
+  .setImg {
+    position: relative;
+    left: 1%;
+    right: 1%;
+  }
+
+  .panel_font {
+    font-family: "Kanit", sans-serif;
+    font-size: 16px;
+    color: rgba(107, 188, 255, 0.986);
+  }
+
+  :host>>>.changeHead {
+    position: absolute;
+  }
+
+  :host>>>.Go_Right {
+    position: absolute;
+    right: 10%;
+  }
+
+  :host>>>.btn_Go_Right {
+    position: absolute;
+    right: 5%;
+    size: 50%;
+  }
+
+  :host>>>.dialog_pop {
+    position: absolute;
+    height: 500%;
+  }
+</style>
+
+<div class="setSizeMenu">
+  <p-panel [style]="{ width: '1180px' }" class="panel_font">
+    <ng-template pTemplate="header">
+      <div style="font-size: 20px">
+        <b>ร้านหมูทะ อาจารย์เอ็ม อิ่ม แซ่บ คุ้ม</b>
+      </div>
+
+      <div class="Go_Right">
+        <app-time></app-time>
+      </div>
+
+      <div _ngcontent-kjc-c41="" class="col-1 my-auto btn_Go_Right" style="text-align: right">
+        <a routerLink="/order"><button _ngcontent-kjc-c41="" pbutton="" icon="pi pi-th-large"
+            class="p-button-rounded p-button-outlined p-button p-component p-button-icon-only">
+            <span class="p-button-icon pi pi-th-large" aria-hidden="true"></span><span aria-hidden="true"
+              class="p-button-label">&amp;nbsp;</span>
+          </button></a>
+      </div>
+    </ng-template>
+    <p-splitter [style]="{ height: '450px' }" styleClass="mb-5">
+      <ng-template pTemplate>
+        <div class="col flex align-items-center justify-content-center">
+          <br />
+          <header style="text-align: center; font-size: 18px">
+            <b>สั่งอาหาร</b>
+          </header>
+          <br />
+          <div class="container">
+            <div class="setImg">
+              <table align="center">
+                <tr>
+                  <td>
+                    <p-image (click)="showBasicDialog('เครื่องดื่มรีฟิล', 0)"
+                      src="https://www.insurancejournal.com/app/uploads/2017/01/Coca-cola.jpg" alt="Image" width="250"
+                      height="150">
+                    </p-image>
+                  </td>
+                  &nbsp;&nbsp;&nbsp;
+                  <td>
+                    <p-image (click)="showBasicDialog('ไอศครีมไม่อั้น', 1)"
+                      src="https://cms.swensens1112.com/image/product/453/4142.jpg" alt="Image" width="250"
+                      height="150">
+                    </p-image>
+                  </td>
+                </tr>
+                <tr align="center" style="font-style: normal">
+                  <th>เครื่องดื่มรีฟิล (30 บาท)</th>
+                  &nbsp;&nbsp;&nbsp;
+                  <th>ไอศครีมรีฟิล (50 บาท)</th>
+                </tr>
+
+                <td>
+                  <p-image (click)="showBasicDialog('ชุดเล็กอิ่มคุ้ม', 2)"
+                    src="http://202.28.34.197/ajm-moo-ta/assets/images/small.jpg" alt="Image" width="230" height="150">
+                  </p-image>
+                </td>
+                &nbsp;&nbsp;&nbsp;
+                <td>
+                  <p-image (click)="showBasicDialog('ชุดใหญ่อิ่มแน่น', 3)"
+                    src="https://pbs.twimg.com/media/EJF4XmcUEAAHKkD?format=jpg&name=large" alt="Image" width="230"
+                    height="150">
+                  </p-image>
+                </td>
+                <tr align="center">
+                  <th>ชุดเล็กอิ่มคุ้ม (59 บาท)</th>
+                  &nbsp;&nbsp;&nbsp;
+                  <th>ชุดใหญ่อิ่มแน่น (129 บาท)</th>
+                </tr>
+              </table>
+            </div>
+            <br />
+
+            <div class="setImg">
+              <table align="center"></table>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate>
+        <div class="col flex align-items-center justify-content-center">
+          <br />
+          <header style="text-align: center; font-size: 18px">
+            <b>จัดการรายการอาหาร</b>
+          </header>
+          <br />
+
+          <div class="card">
+            <p-table [value]="menu" responsiveLayout="scroll" selectionMode="single">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th id="1" style="text-align: center">รายการอาหาร</th>
+                  <th id="2" style="text-align: center">ราคา</th>
+                  <th id="3" style="text-align: center">จำนวน</th>
+                  <th id="4" style="text-align: center">รวม</th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-paste let-rowIndex>
+                <tr (click)="
+                    showBasicDialog2(
+                      paste.foodL,
+                      paste.amountL,
+                      paste.idxL,
+                      rowIndex
+                    )
+                  " [pSelectableRow]="paste">
+                  <td>{{ paste.foodL }}</td>
+                  <td>{{ paste.priceL }}</td>
+                  <td>{{ paste.amountL }}</td>
+                  <td>{{ paste.priceL * paste.amountL }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+            <div class="container">
+              <div class="row">
+                <div class="col-10" style="
+                    text-align: right;
+                    font-size: 20px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                  ">
+                  ราคารวมทั้งสิ้น
+                </div>
+
+                <div class="col-2" style="
+                    text-align: center;
+                    font-size: 20px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                  ">
+                  {{ sumF }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div _ngcontent-smo-c41="" class="row ng-star-inserted" style="text-align: center; padding-top: 10px">
+            <div _ngcontent-smo-c41="" class="col" style="text-align: center">
+              <button (click)="confirm2()" _ngcontent-smo-c41="" pbutton="" type="button" label="ชำระเงิน"
+                icon="pi pi-money-bill" style="width: 150px" class="p-button p-component">
+                <span class="p-button-icon p-button-icon-left pi pi-money-bill" aria-hidden="true"></span><span
+                  class="p-button-label">ชำระเงิน</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-splitter>
+
+    <p-dialog class="" header="เลือกจำนวน" [(visible)]="displayBasic" [style]="{ width: '15vw' }">
+      <div class="ng-tns-c39-2 p-dialog-content">
+        <div _ngcontent-cgt-c41="" style="padding-top: 5px; text-align: center" class="ng-tns-c39-2 ng-star-inserted">
+          <span _ngcontent-cgt-c41=""><strong _ngcontent-cgt-c41=""> {{ nameMenu[uId] }} </strong></span>
+        </div>
+        <!---->
+        <div _ngcontent-cgt-c41="" style="text-align: center" class="ng-tns-c39-2">
+          <div _ngcontent-cgt-c41="" class="row">
+            <div _ngcontent-cgt-c41="" class="col my-auto">
+              <button (click)="decreaseMinus(uId)" _ngcontent-cgt-c41="" pbutton="" type="button" icon="pi pi-minus"
+                class="p-button-rounded p-button p-component p-button-icon-only">
+                <span class="p-button-icon pi pi-minus" aria-hidden="true"></span><span aria-hidden="true"
+                  class="p-button-label">&amp;nbsp;</span>
+              </button>
+            </div>
+            <div _ngcontent-cgt-c41="" class="col my-auto">
+              <span _ngcontent-cgt-c41="" style="font-size: 48px">
+                {{ amount[uId] }}
+              </span>
+            </div>
+            <div _ngcontent-cgt-c41="" class="col my-auto">
+              <button (click)="increasePlus(uId)" _ngcontent-cgt-c41="" pbutton="" type="button" icon="pi pi-plus"
+                class="p-button-rounded p-button p-component p-button-icon-only">
+                <span class="p-button-icon pi pi-plus" aria-hidden="true"></span><span aria-hidden="true"
+                  class="p-button-label">&amp;nbsp;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <br _ngcontent-cgt-c41="" class="ng-tns-c39-2" />
+        <div _ngcontent-cgt-c41="" style="text-align: center" class="ng-tns-c39-2">
+          <button (click)="show()" _ngcontent-cgt-c41="" pbutton="" type="button" icon="pi pi-check"
+            style="width: 200px" class="p-button p-component">
+            <span class="p-button-icon p-button-icon-left pi pi-check" aria-hidden="true"></span><span
+              class="p-button-label">เพิ่มรายการ</span>
+          </button>
+        </div>
+        <!---->
+      </div>
+    </p-dialog>
+
+    <p-dialog class="" header="เลือกจำนวน" [(visible)]="displayBasic2" [style]="{ width: '15vw' }">
+      <div class="ng-tns-c39-2 p-dialog-content">
+        <div _ngcontent-cgt-c41="" style="padding-top: 5px; text-align: center" class="ng-tns-c39-2 ng-star-inserted">
+          <span _ngcontent-cgt-c41=""><strong _ngcontent-cgt-c41=""> {{ foodL }} </strong></span>
+        </div>
+        <!---->
+        <div _ngcontent-cgt-c41="" style="text-align: center" class="ng-tns-c39-2">
+          <div _ngcontent-cgt-c41="" class="row">
+            <div _ngcontent-cgt-c41="" class="col my-auto">
+              <button (click)="decreaseMinus2(xId)" _ngcontent-cgt-c41="" pbutton="" type="button" icon="pi pi-minus"
+                class="p-button-rounded p-button p-component p-button-icon-only">
+                <span class="p-button-icon pi pi-minus" aria-hidden="true"></span><span aria-hidden="true"
+                  class="p-button-label">&amp;nbsp;</span>
+              </button>
+            </div>
+            <div _ngcontent-cgt-c41="" class="col my-auto">
+              <span _ngcontent-cgt-c41="" style="font-size: 48px">
+                {{ amount[xId] }}
+              </span>
+            </div>
+            <div _ngcontent-cgt-c41="" class="col my-auto">
+              <button (click)="increasePlus2(xId)" _ngcontent-cgt-c41="" pbutton="" type="button" icon="pi pi-plus"
+                class="p-button-rounded p-button p-component p-button-icon-only">
+                <span class="p-button-icon pi pi-plus" aria-hidden="true"></span><span aria-hidden="true"
+                  class="p-button-label">&amp;nbsp;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <br _ngcontent-cgt-c41="" class="ng-tns-c39-2" />
+
+        <div _ngcontent-oth-c41="" style="text-align: center" class="ng-tns-c39-43">
+          <button (click)="updateData(idxL)" _ngcontent-oth-c41="" pbutton="" type="button" label="ปรับปรุงรายการ"
+            icon="pi pi-check" style="width: 200px" class="p-button p-component">
+            <span class="p-button-icon p-button-icon-left pi pi-check" aria-hidden="true"></span><span
+              class="p-button-label">ปรับปรุงรายการ</span>
+          </button>
+        </div>
+        <br />
+
+        <div _ngcontent-oth-c41="" style="text-align: center" class="ng-tns-c39-43">
+          <button (click)="delData()" _ngcontent-oth-c41="" pbutton="" type="button" label="ลบรายการ" icon="pi pi-times"
+            class="p-button-danger p-button p-component" style="width: 200px">
+            <span class="p-button-icon p-button-icon-left pi pi-times" aria-hidden="true"></span><span
+              class="p-button-label">ลบรายการ</span>
+          </button>
+        </div>
+      </div>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{ width: '15vw' }" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text" #c>
+      <ng-template pTemplate="footer">
+        <div class="alling-center">
+          <button (click)="c.reject()" type="button" pButton icon="pi pi-times" label="ยกเลิก"></button>
+          <button (click)="c.accept()" type="button" pButton icon="pi pi-check" label="ยืนยัน"></button>
+        </div>
+      </ng-template>
+    </p-confirmDialog>
+
+    <p-dialog header="ใบเสร็จเลขที่ " [(visible)]="displayBasic3" [modal]="true" [style]="{ width: '40vw' }">
+      <div style="text-align: center">
+        <div class="card">
+          <p-table [value]="menu" responsiveLayout="scroll" selectionMode="single">
+            <ng-template pTemplate="header" let-paste>
+              <tr>
+                <th id="1" style="text-align: center">รายการอาหาร</th>
+                <th id="2" style="text-align: center">ราคา</th>
+                <th id="3" style="text-align: center">จำนวน</th>
+                <th id="4" style="text-align: center">รวม</th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-paste let-rowIndex>
+              <tr [pSelectableRow]="paste">
+                <td>{{ paste.foodL }}</td>
+                <td>{{ paste.priceL }}</td>
+                <td>{{ paste.amountL }}</td>
+                <td>{{ paste.priceL * paste.amountL }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <div class="container">
+            <div class="row">
+              <div class="col-10" style="
+                  text-align: right;
+                  font-size: 20px;
+                  padding-top: 10px;
+                  padding-bottom: 10px;
+                ">
+                ราคารวมทั้งสิ้น
+              </div>
+
+              <div class="col-2" style="
+                  text-align: center;
+                  font-size: 20px;
+                  padding-top: 10px;
+                  padding-bottom: 10px;
+                ">
+                {{ sumF }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div _ngcontent-mhy-c41="" class="row ng-tns-c39-14" style="text-align: center; padding-top: 10px">
+        <div _ngcontent-mhy-c41="" class="col" style="text-align: center">
+          <button (click)="insertBill()" _ngcontent-mhy-c41="" pbutton="" type="button" label="ปิดหน้าต่าง"
+            icon="pi pi-times" style="width: 150px" class="p-button p-component">
+            <span class="p-button-icon p-button-icon-left pi pi-times" aria-hidden="true"></span><span
+              class="p-button-label">ปิดหน้าต่าง</span>
+          </button>
+        </div>
+      </div>
+    </p-dialog>
+
+    <script src="main.7421f4f6924738520278.js" defer=""></script>
+    <script src="polyfills.94daefd414b8355106ab.js" defer=""></script>
+    <script src="runtime.7b63b9fd40098a2e8207.js" defer=""></script>
+  </p-panel>
+</div>
